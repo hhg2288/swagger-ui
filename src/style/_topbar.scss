@@ -1,65 +1,74 @@
-.topbar
-{
-    padding: 8px 30px;
+.topbar {
+  padding: $base*1.5 $base*2;
 
-    background-color: #89bf04;
-    .topbar-wrapper
-    {
-        display: flex;
+  background-color: $color-primary;
 
-        align-items: center;
+  .topbar-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    @media (max-width: 480px) {
+      flex-direction: column;
+      align-items: start;
     }
-    a
-    {
-        font-size: 1.5em;
-        font-weight: bold;
+  }
 
-        display: flex;
+  a {
+    font-size: 1em;
+    display: flex;
+    text-decoration: none;
+    flex: 1;
+    align-items: center;
+    @include text_headline(rgba(255,255,255,0.6));
 
-        max-width: 300px;
+    span {
+      margin: 0;
+      padding: 0 0 0 $base*4;
+      position: relative;
 
-        text-decoration: none;
+      &:after {
+        content: '|';
+        position: absolute;
+        color: rgba(255,255,255,0.2);
+        top: 0;
+        left: $base * 2;
+      }
+    }
+  }
 
-        flex: 1;
-        align-items: center;
-        @include text_headline(#fff);
+  #api-selector {
 
-        span
-        {
-            margin: 0;
-            padding: 0 10px;
-        }
+    @media (max-width: 480px) {
+      width: 100%;
+      margin-top: $base * 2
+    }
+  }
+
+  .download-url-wrapper {
+    display: flex;
+
+    input[type=text] {
+      width: 100%;
+      min-width: 350px;
+      margin: 0;
+
+      border: 2px solid #547f00;
+      border-radius: 4px 0 0 4px;
+      outline: none;
     }
 
-    .download-url-wrapper
-    {
-        display: flex;
+    .download-url-button {
+      font-size: 16px;
+      font-weight: bold;
 
-        flex: 3;
+      padding: 4px 40px;
 
-        input[type=text]
-        {
-            width: 100%;
-            min-width: 350px;
-            margin: 0;
+      border: none;
+      border-radius: 0 4px 4px 0;
+      background: #547f00;
 
-            border: 2px solid #547f00;
-            border-radius: 4px 0 0 4px;
-            outline: none;
-        }
-
-        .download-url-button
-        {
-            font-size: 16px;
-            font-weight: bold;
-
-            padding: 4px 40px;
-
-            border: none;
-            border-radius: 0 4px 4px 0;
-            background: #547f00;
-
-            @include text_headline(#fff);
-        }
+      @include text_headline(#fff);
     }
+  }
 }

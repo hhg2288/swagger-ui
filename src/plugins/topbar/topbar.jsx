@@ -1,7 +1,7 @@
 import React, { PropTypes } from "react"
 
 //import "./topbar.less"
-import Logo from "./logo_small.png"
+import Logo from "./billy_logo.png"
 
 export default class Topbar extends React.Component {
 
@@ -14,21 +14,32 @@ export default class Topbar extends React.Component {
     this.setState({ url: nextProps.specSelectors.url() })
   }
 
-  onUrlChange =(e)=> {
-    let {target: {value}} = e
-    this.setState({url: value})
-  }
-
   downloadUrl = (e) => {
-    this.props.specActions.updateUrl(this.state.url)
-    this.props.specActions.download(this.state.url)
-    e.preventDefault()
+    // let {target: {value}} = e
+    // this.setState({url: value})
+    // this.props.specActions.updateUrl(this.state.url)
+    // this.props.specActions.download(this.state.url)
+    // e.preventDefault()
+
+    window.location = `${window.location.origin}?url=${e.target.value}`;
+
   }
 
   render() {
     let { getComponent, specSelectors } = this.props
     const Button = getComponent("Button")
     const Link = getComponent("Link")
+
+    const APIOptions = [
+      {
+        label: 'Publishers v1',
+        value: 'https://api.billystaging.com/publishers/v1/swagger.json'
+      },
+      {
+        label: 'Advertisers v1',
+        value: 'https://api.billystaging.com/advertisers/v1/swagger.json'
+      }
+    ];
 
     let isLoading = specSelectors.loadingStatus() === "loading"
     let isFailed = specSelectors.loadingStatus() === "failed"
@@ -38,17 +49,21 @@ export default class Topbar extends React.Component {
     if(isLoading) inputStyle.color = "#aaa"
     return (
         <div className="topbar">
-          <div className="wrapper">
-            <div className="topbar-wrapper">
-              <Link href="#" title="Swagger UX">
-                <img height="30" width="30" src={ Logo } alt="Swagger UX"/>
-                <span>swagger</span>
-              </Link>
-              <form className="download-url-wrapper" onSubmit={this.downloadUrl}>
-                <input className="download-url-input" type="text" onChange={ this.onUrlChange } value={this.state.url} disabled={isLoading} style={inputStyle} />
-                <Button className="download-url-button" onClick={ this.downloadUrl }>Explore</Button>
-              </form>
-            </div>
+          <div className="topbar-wrapper">
+            <Link href="#" title="Billy Performance Network">
+              <img height="32" width="66" src={ Logo } alt="Billy Performance Network"/>
+              <span>API Documentation</span>
+            </Link>
+            <select name="api-select"
+                    id="api-selector"
+                    onChange={this.downloadUrl}
+                    value={this.state.url}>
+              {
+                APIOptions.map((option) => {
+                  return <option value={option.value}>{option.label}</option>
+                })
+              }
+            </select>
           </div>
         </div>
 
